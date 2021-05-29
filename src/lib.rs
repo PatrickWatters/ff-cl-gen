@@ -1,7 +1,8 @@
 mod nvidia;
 mod utils;
+pub extern crate pairing;
 
-use ff::PrimeField;
+use pairing::ff::PrimeField;
 use itertools::*;
 use num_bigint::BigUint;
 
@@ -180,7 +181,7 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use ff::Field;
+    use pairing::ff::Field;
     use lazy_static::lazy_static;
     use ocl::{OclPrm, ProQue};
     use pairing::bls12_381::Fr;

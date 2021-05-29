@@ -1,5 +1,6 @@
 use crate::Limb;
-use ff::PrimeField;
+
+use pairing::ff::PrimeField;
 use itertools::*;
 
 /// Generates PTX-Assembly implementation of FIELD_add_/FIELD_sub_
