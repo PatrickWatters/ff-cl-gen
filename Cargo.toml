@@ -13,7 +13,7 @@ repository = "https://github.com/filecoin-project/ff-cl-gen"
 itertools = { version = "0.8.0" }
 num-bigint = "0.2"
 #pairing = {package = "pairing_ce", version = "0.24.*" }
-pairing = { package = "pairing_opt", git = "https://github.com/skipjack8/pairing_opt", branch="mcl_test" }
+pairing = { package = "pairing_opt", git = "https://github.com/skipjack8/pairing_opt", branch="master" }
 rand = "0.7"
 
 [dev-dependencies]
