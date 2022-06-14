@@ -10,13 +10,12 @@ license = "MIT/Apache-2.0"
 repository = "https://github.com/filecoin-project/ff-cl-gen"
 
 [dependencies]
-ff = { version = "0.13.1", package = "ff_ce"}
 itertools = { version = "0.8.0" }
 num-bigint = "0.2"
+ff = "0.11"
+pairing = { git = 'https://github.com/appliedzkp/pairing', package = "pairing_bn256", "tag" = "v0.1.1"}
 
 [dev-dependencies]
 ocl = { version = "0.19.4", package = "fil-ocl"}
-#paired = { version = "0.18.0" }
-pairing = {package = "pairing_ce", version = "0.24.*" }
 rand = "0.7"
 lazy_static = "1.2"
