@@ -118,10 +118,10 @@ fn define_field<L: Limb>(name: &str, limbs: Vec<L>) -> String {
 /// Calculates `R ^ 2 mod P` and returns the result as a vector of 32bit limbs
 fn calculate_r2<F: PrimeField>() -> Vec<u32> {
     // R ^ 2 mod P
-    BigUint::new(utils::limbs_of::<_, u32>(Fr::one()))
+    BigUint::new(utils::limbs_of::<_, u32>(F::one()))
         .modpow(
             &BigUint::from_slice(&[2]),                          // ^ 2
-            &BigUint::new(utils::limbs_of::<_, u32>(bn256::fr::MODULUS)), // mod P
+            &BigUint::new(utils::limbs_of::<_, u32>(F::char())), // mod P
         )
         .to_u32_digits()
 }
@@ -131,8 +131,8 @@ fn params<F, L: Limb>() -> String
 where
     F: PrimeField,
 {
-    let one = L::limbs_of(Fr::one()); // Get Montgomery form of F::one()
-    let p = L::limbs_of(bn256::fr::MODULUS); // Get regular form of field modulus
+    let one = L::limbs_of(F::one()); // Get Montgomery form of F::one()
+    let p = L::limbs_of(F::char()); // Get regular form of field modulus
     let r2 = L::calculate_r2::<F>();
     let limbs = one.len(); // Number of limbs
     let inv = L::calc_inv(p[0]);
