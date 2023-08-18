@@ -278,7 +278,7 @@ mod tests {
         for _ in 0..10 {
             let a = Fr::random(&mut rng);
             let b = rng.gen::<u32>();
-            let c = a.pow_vartime([b as u64]);
+            let c = a.pow([b as u64]);
             assert_eq!(call_kernel!("test_pow_32", GpuFr(a), b), c);
             assert_eq!(call_kernel!("test_pow_64", GpuFr(a), b), c);
         }
