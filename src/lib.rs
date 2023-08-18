@@ -4,8 +4,11 @@ mod utils;
 use ff::PrimeField;
 use itertools::*;
 use num_bigint::BigUint;
-pub use pairing::bn256::Fr;
-pub use pairing::bn256;
+
+pub use halo2curves::bn256::Fr;
+pub use halo2curves::bn256;
+//pub use pairing::bn256::Fr;
+//pub use pairing::bn256;
 
 static COMMON_SRC: &str = include_str!("cl/common.cl");
 static FIELD_SRC: &str = include_str!("cl/field.cl");
@@ -118,10 +121,10 @@ fn define_field<L: Limb>(name: &str, limbs: Vec<L>) -> String {
 /// Calculates `R ^ 2 mod P` and returns the result as a vector of 32bit limbs
 fn calculate_r2<F: PrimeField>() -> Vec<u32> {
     // R ^ 2 mod P
-    BigUint::new(utils::limbs_of::<_, u32>(F::one()))
+    BigUint::new(utils::limbs_of::<_, u32>(F::ONE))
         .modpow(
             &BigUint::from_slice(&[2]),                          // ^ 2
-            &BigUint::new(utils::limbs_of::<_, u32>(F::char())), // mod P
+            &BigUint::new(utils::limbs_of::<_, u32>(F::MODULUS)), // mod P
         )
         .to_u32_digits()
 }
@@ -131,8 +134,8 @@ fn params<F, L: Limb>() -> String
 where
     F: PrimeField,
 {
-    let one = L::limbs_of(F::one()); // Get Montgomery form of F::one()
-    let p = L::limbs_of(F::char()); // Get regular form of field modulus
+    let one = L::limbs_of(F::ONE); // Get Montgomery form of F::one()
+    let p = L::limbs_of(F::MODULUS); // Get regular form of field modulus
     let r2 = L::calculate_r2::<F>();
     let limbs = one.len(); // Number of limbs
     let inv = L::calc_inv(p[0]);
@@ -185,7 +188,7 @@ mod tests {
     use ff::Field;
     use lazy_static::lazy_static;
     use ocl::{OclPrm, ProQue};
-    use pairing::bn256::Fr;
+    use halo2curves::bn256::Fr;
     use rand::{thread_rng, Rng};
 
     #[derive(PartialEq, Debug, Clone, Copy)]

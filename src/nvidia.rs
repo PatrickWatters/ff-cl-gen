@@ -12,7 +12,7 @@ where
 
     result.push_str("#ifdef NVIDIA\n");
     for op in &["sub", "add"] {
-        let len = L::limbs_of(F::one()).len();
+        let len = L::limbs_of(F::ONE).len();
 
         let mut src = format!("FIELD FIELD_{}_nvidia(FIELD a, FIELD b) {{\n", op);
         if len > 1 {
