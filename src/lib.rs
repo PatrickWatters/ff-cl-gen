@@ -5,7 +5,6 @@ use ff::PrimeField;
 use itertools::*;
 use num_bigint::BigUint;
 
-pub use halo2curves::bn256::Fr;
 pub use halo2curves::bn256;
 //pub use pairing::bn256::Fr;
 //pub use pairing::bn256;
@@ -240,10 +239,10 @@ mod tests {
         for _ in 0..10 {
             let a = Fr::random(&mut rng);
             let b = Fr::random(&mut rng);
-            let mut c = a.clone();
-            c.add(&b);
-            assert_eq!(call_kernel!("test_add_32", GpuFr(a), GpuFr(b)), c);
-            assert_eq!(call_kernel!("test_add_64", GpuFr(a), GpuFr(b)), c);
+            let c = a.clone();
+            let t1 =c.add(&b);
+            assert_eq!(call_kernel!("test_add_32", GpuFr(a), GpuFr(b)), t1);
+            assert_eq!(call_kernel!("test_add_64", GpuFr(a), GpuFr(b)), t1);
         }
     }
 
@@ -253,10 +252,10 @@ mod tests {
         for _ in 0..10 {
             let a = Fr::random(&mut rng);
             let b = Fr::random(&mut rng);
-            let mut c = a.clone();
-            c.sub(&b);
-            assert_eq!(call_kernel!("test_sub_32", GpuFr(a), GpuFr(b)), c);
-            assert_eq!(call_kernel!("test_sub_64", GpuFr(a), GpuFr(b)), c);
+            let  c = a.clone();
+            let t1 = c.sub(&b);
+            assert_eq!(call_kernel!("test_sub_32", GpuFr(a), GpuFr(b)), t1);
+            assert_eq!(call_kernel!("test_sub_64", GpuFr(a), GpuFr(b)), t1);
         }
     }
 
@@ -266,10 +265,10 @@ mod tests {
         for _ in 0..10 {
             let a = Fr::random(&mut rng);
             let b = Fr::random(&mut rng);
-            let mut c = a.clone();
-            c.mul(&b);
-            assert_eq!(call_kernel!("test_mul_32", GpuFr(a), GpuFr(b)), c);
-            assert_eq!(call_kernel!("test_mul_64", GpuFr(a), GpuFr(b)), c);
+            let  c = a.clone();
+            let t1= c.mul(&b);
+            assert_eq!(call_kernel!("test_mul_32", GpuFr(a), GpuFr(b)), t1);
+            assert_eq!(call_kernel!("test_mul_64", GpuFr(a), GpuFr(b)), t1);
         }
     }
 
@@ -290,10 +289,10 @@ mod tests {
         let mut rng = thread_rng();
         for _ in 0..10 {
             let a = Fr::random(&mut rng);
-            let mut b = a.clone();
-            b.square();
-            assert_eq!(call_kernel!("test_sqr_32", GpuFr(a)), b);
-            assert_eq!(call_kernel!("test_sqr_64", GpuFr(a)), b);
+            let b = a.clone();
+            let t1 = b.square();
+            assert_eq!(call_kernel!("test_sqr_32", GpuFr(a)), t1);
+            assert_eq!(call_kernel!("test_sqr_64", GpuFr(a)), t1);
         }
     }
 
@@ -302,10 +301,10 @@ mod tests {
         let mut rng = thread_rng();
         for _ in 0..10 {
             let a = Fr::random(&mut rng);
-            let mut b = a.clone();
-            b.double();
-            assert_eq!(call_kernel!("test_double_32", GpuFr(a)), b);
-            assert_eq!(call_kernel!("test_double_64", GpuFr(a)), b);
+            let b: Fr = a.clone();
+            let t1 = b.double();
+            assert_eq!(call_kernel!("test_double_32", GpuFr(a)), t1);
+            assert_eq!(call_kernel!("test_double_64", GpuFr(a)), t1);
         }
     }
 

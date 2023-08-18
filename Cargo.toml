@@ -14,7 +14,10 @@ itertools = { version = "0.8.0" }
 num-bigint = "0.2"
 #ff = { git = 'https://github.com/starslabhq/ff', branch = "v0.11.1Char"}
 #pairing = { git = 'https://github.com/starslabhq/pairing', package = "pairing_bn256", branch = "primeFieldChar"}
-ff = { path = "../ff",version = "0.13", features = ["derive"] }
+
+ff = {version = "0.13", features = ["derive"] }
+
+#ff = { path = "../ff",version = "0.13", features = ["derive"] }
 halo2curves = { git = 'https://github.com/privacy-scaling-explorations/halo2curves', tag = "0.3.2" }
 
 
