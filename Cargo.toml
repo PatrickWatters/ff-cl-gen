@@ -17,5 +17,9 @@ pairing = { git = 'https://github.com/starslabhq/pairing', package = "pairing_bn
 
 [dev-dependencies]
 ocl = { version = "0.19.4", package = "fil-ocl"}
-rand = "0.7"
+rand = "0.8"
 lazy_static = "1.2"
+[patch.crates-io]
+# temporary solution to funty@1.2.0 being yanked, we should propose bitvec upgrade to upstream filecoin crates
+# tracking issue: https://github.com/bitvecto-rs/funty/issues/7
+funty = { git = "https://github.com/bitvecto-rs/funty/", rev = "7ef0d890fbcd8b3def1635ac1a877fc298488446" }

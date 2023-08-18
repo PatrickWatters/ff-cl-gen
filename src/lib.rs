@@ -185,7 +185,7 @@ mod tests {
     use ff::Field;
     use lazy_static::lazy_static;
     use ocl::{OclPrm, ProQue};
-    use pairing::bls12_381::Fr;
+    use pairing::bn256::Fr;
     use rand::{thread_rng, Rng};
 
     #[derive(PartialEq, Debug, Clone, Copy)]
@@ -238,7 +238,7 @@ mod tests {
             let a = Fr::random(&mut rng);
             let b = Fr::random(&mut rng);
             let mut c = a.clone();
-            c.add_assign(&b);
+            c.add(&b);
             assert_eq!(call_kernel!("test_add_32", GpuFr(a), GpuFr(b)), c);
             assert_eq!(call_kernel!("test_add_64", GpuFr(a), GpuFr(b)), c);
         }
@@ -251,7 +251,7 @@ mod tests {
             let a = Fr::random(&mut rng);
             let b = Fr::random(&mut rng);
             let mut c = a.clone();
-            c.sub_assign(&b);
+            c.sub(&b);
             assert_eq!(call_kernel!("test_sub_32", GpuFr(a), GpuFr(b)), c);
             assert_eq!(call_kernel!("test_sub_64", GpuFr(a), GpuFr(b)), c);
         }
@@ -264,7 +264,7 @@ mod tests {
             let a = Fr::random(&mut rng);
             let b = Fr::random(&mut rng);
             let mut c = a.clone();
-            c.mul_assign(&b);
+            c.mul(&b);
             assert_eq!(call_kernel!("test_mul_32", GpuFr(a), GpuFr(b)), c);
             assert_eq!(call_kernel!("test_mul_64", GpuFr(a), GpuFr(b)), c);
         }
@@ -276,7 +276,7 @@ mod tests {
         for _ in 0..10 {
             let a = Fr::random(&mut rng);
             let b = rng.gen::<u32>();
-            let c = a.pow([b as u64]);
+            let c = a.pow_vartime([b as u64]);
             assert_eq!(call_kernel!("test_pow_32", GpuFr(a), b), c);
             assert_eq!(call_kernel!("test_pow_64", GpuFr(a), b), c);
         }
